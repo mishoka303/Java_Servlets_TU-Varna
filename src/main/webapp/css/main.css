@@ -1,0 +1,58 @@
+.welcome-title {
+    margin-top: 35vh;
+    width: 100vw;
+    display: block;
+    text-align: center;
+    font-family: "Comic Sans MS";
+    font-style: italic;
+}
+
+a {
+    text-decoration: none;
+}
+
+.button {
+    background-color: #00ff00;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    margin: 20px 25px 20px 25px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+
+.login {background-color: #e7e7e7; color: black;}
+
+.register {background-color: #555555;}
+
+.wrapper1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* The alert message box */
+.alert {
+    padding: 20px;
+    background-color: #2196F3; /* Light Blue */
+    color: white;
+    margin-bottom: 15px;
+}
+
+/* The close button */
+.closebtn {
+    margin-left: 15px;
+    color: white;
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.closebtn:hover {
+    color: black;
+}
