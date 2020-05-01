@@ -12,14 +12,14 @@
             <password>u2</password>
         </student>
         <student>
-            <name>Kaloyan Kalchev</name>
+            <name>Peter Peev</name>
             <username>u3</username>
             <password>u3</password>
         </student>
         <student>
-            <name>Peter Peev</name>
-            <username>u4</username>
-            <password>u4</password>
+            <name>New Profile5</name>
+            <username>u5</username>
+            <password>u5</password>
         </student>
     </studentList>
 </ns2:students>

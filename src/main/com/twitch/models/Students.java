@@ -7,9 +7,6 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import static twitch.controllers.AccountServlet.*;
-
-//Тази анотация означава, че клас "Group.java" е основният елемент на файла
 @XmlRootElement(namespace = "de.vogella.xml.jaxb.model")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Students {

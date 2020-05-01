@@ -20,6 +20,7 @@
 <div class="wrapper1">
     <a href="login" class="button login">Login</a>
     <a href="register" class="button register">Register</a>
+    <a href="studentList" class="button login">Student List</a>
 </div>
 
 

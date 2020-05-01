@@ -20,6 +20,7 @@
     <url-pattern>/index</url-pattern>
   </servlet-mapping>
 
+
   <!-- Account Servlet & Mapping -->
   <servlet>
     <servlet-name>Account</servlet-name>
@@ -44,13 +45,27 @@
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>Account</servlet-name>
+    <url-pattern>/studentList</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>Account</servlet-name>
     <url-pattern>/logout</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>Account</servlet-name>
     <url-pattern>/hideGreetz</url-pattern>
   </servlet-mapping>
-  <!-- END -->
+
+  <!-- FILTERS -->
+  <filter>
+    <filter-name>AuthFilter</filter-name> <!-- mandatory -->
+    <filter-class>twitch.Filters.AuthFilter</filter-class> <!-- mandatory -->
+  </filter>
+  <filter-mapping>
+    <filter-name>AuthFilter</filter-name> <!-- mandatory -->
+    <servlet-name>Account</servlet-name>
+    <dispatcher>REQUEST</dispatcher>
+  </filter-mapping>
 
   <listener>
     <listener-class>

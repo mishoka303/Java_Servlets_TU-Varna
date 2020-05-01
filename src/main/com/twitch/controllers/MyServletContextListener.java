@@ -1,11 +1,6 @@
 package twitch.controllers;
-import twitch.models.User;
-import javax.servlet.*;
-import javax.xml.bind.JAXBException;
 
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.List;
+import javax.servlet.*;
 
 import static twitch.controllers.AccountServlet.*;
 

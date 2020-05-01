@@ -4,6 +4,7 @@ import twitch.models.Students;
 import twitch.models.User;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -22,57 +23,47 @@ import java.util.Date;
 import java.util.List;
 
 public class AccountServlet extends HttpServlet{
-    //static public ArrayList<User> users = new ArrayList<>(); //students in array
+    static public ArrayList<User> users = new ArrayList<>(); //students in array
     static public Students students = new Students(); //POJO class
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        // Click Login
-        if (req.getRequestURI().substring(req.getRequestURI().lastIndexOf('/')).equals("/login")) {
-                if (req.getSession(false) == null || req.getSession(false).getAttribute("logged_id") == null) { req.getRequestDispatcher("/login.jsp").forward(req, resp); }
-                else resp.sendRedirect("dashboard");
-        }
-        // Click Register
-        else if (req.getRequestURI().substring(req.getRequestURI().lastIndexOf('/')).equals("/register")) {
-            if (req.getSession(false) == null || req.getSession(false).getAttribute("logged_id") == null) { req.getRequestDispatcher("/register.jsp").forward(req, resp); }
-            else resp.sendRedirect("dashboard");
-        }
         // Click/Go to Dashboard
-        else if (req.getRequestURI().substring(req.getRequestURI().lastIndexOf('/')).equals("/dashboard")) {
-            //Check if there is ?id=
-            if (req.getParameterMap().containsKey("id")) {
-                String query1 = req.getParameter("id");
-                int int_id = Integer.parseInt(query1);
+        if (req.getRequestURI().substring(req.getRequestURI().lastIndexOf('/')).equals("/dashboard")) {
+            if (req.getSession(false) == null) { resp.sendRedirect("index"); } //Empty session
+            else {
+                //Checks if there is ?id=
+                if (req.getParameterMap().containsKey("id")) {
+                    String query1 = req.getParameter("id");
+                    int int_id = Integer.parseInt(query1);
 
-                if (int_id > students.getStudents().size() - 1 || students.getStudents().get(int_id) == null) {
-                    resp.sendRedirect("index");
-                } else {
-                    req.setAttribute("user", students.getStudents().get(int_id));
-                    req.setAttribute("id", int_id);
-                    if ((int) req.getSession().getAttribute("logged_id") == int_id) {
-                        req.setAttribute("editOption", "<a href=\"${pageContext.request.contextPath}/editProfile\">Edit Profile</a>");
-                        req.setAttribute("LogOutOption", "<a href=\"logout\">Log Out</a>");
+                    if (int_id > students.getStudents().size() - 1 || int_id < 0 || students.getStudents().get(int_id) == null) {
+                        resp.sendRedirect("index"); //invalid ID or out of bounds
+                    } else {
+                        req.setAttribute("user", students.getStudents().get(int_id));
+                        req.setAttribute("id", int_id);
+                        System.out.println(req.getSession().getAttribute("logged_id"));
+                        if ((int) req.getSession().getAttribute("logged_id") == int_id) {
+                            req.setAttribute("editOption", "<a href=\"editProfile\">Edit Profile</a>   ");
+                            req.setAttribute("LogOutOption", "   <a href=\"logout\">Log Out</a>");
+                        }
+                        req.getRequestDispatcher("/dashboard.jsp").forward(req, resp);
+                        // String query1 = req.getQueryString(); //Query param
                     }
+                }// Else check if session logged in
+                else if (req.getSession().getAttribute("logged_id") != null) {
+                    int int_id = (int) req.getSession().getAttribute("logged_id");
+                    System.out.println(req.getSession().getAttribute("logged_id"));
+                    DashboardSessionOrganizer(req, resp, int_id);
                     req.getRequestDispatcher("/dashboard.jsp").forward(req, resp);
-                    // String query1 = req.getQueryString(); //Query param
                 }
-            // Check if session logged in
+                // Redirect if not logged in or no ?id= query
+                else resp.sendRedirect("index");
             }
-            else if (req.getSession().getAttribute("logged_id") != null) {
-                int int_id = (int) req.getSession().getAttribute("logged_id");
-                DashboardSessionOrganizer(req, resp, int_id);
-                req.getRequestDispatcher("/dashboard.jsp").forward(req, resp);
-            }
-            // Redirect if not logged in or no ?id= query
-            else resp.sendRedirect("index");
         }
-        // Click on editProfile
-        else if (req.getRequestURI().substring(req.getRequestURI().lastIndexOf('/')).equals("/editProfile")) {
-            if (req.getSession(false) != null && req.getSession(false).getAttribute("logged_id") != null) { req.getRequestDispatcher("/editProfile.jsp").forward(req, resp); }
-            else resp.sendRedirect("index");
-        }
+
         // Click on LogOut
-        else if (req.getRequestURI().substring(req.getRequestURI().lastIndexOf('/')).equals("/logout")) {
+        if (req.getRequestURI().substring(req.getRequestURI().lastIndexOf('/')).equals("/logout")) {
             req.getSession().invalidate();
             resp.sendRedirect("index");
         }
@@ -81,7 +72,6 @@ public class AccountServlet extends HttpServlet{
             HideGreetsForToday(req, resp);
             resp.sendRedirect("dashboard");
         }
-        else resp.sendRedirect("index");
     }
 
 
@@ -216,7 +206,7 @@ public class AccountServlet extends HttpServlet{
     }
 
     // Used to check for cookie Greetz if it's true or false + additions(Edit Profile, Log Out)
-    private void DashboardSessionOrganizer(HttpServletRequest req, HttpServletResponse resp, int int_id) {
+    protected void DashboardSessionOrganizer(HttpServletRequest req, HttpServletResponse resp, int int_id) {
         req.setAttribute("user", students.getStudents().get(int_id));
         req.setAttribute("id", int_id);
         req.setAttribute("editOption", "<a href=\"editProfile\">Edit Profile</a>");
@@ -245,7 +235,7 @@ public class AccountServlet extends HttpServlet{
     }
 
     // Used to hide the cookie and set time to expire at the end of the day
-    private void HideGreetsForToday(HttpServletRequest req, HttpServletResponse resp) {
+    protected void HideGreetsForToday(HttpServletRequest req, HttpServletResponse resp) {
         Cookie ck1[]= req.getCookies();
         for(int i = 0; i < ck1.length; i++){
             if (ck1[i].getName().equals("Greetz")) {

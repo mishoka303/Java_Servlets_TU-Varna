@@ -1,20 +1,18 @@
+<%@ taglib prefix="display" uri="http://displaytag.sf.net" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/main.css">
-    <title>Dashboard</title>
+    <title>Students list</title>
 </head>
 <body>
-${CookieGreetz}
-${CookieTime}
-<br>
-<h1>Showing details for: ${user.getName()}</h1><br>
-<p>The username associated is ${user.getUsername()}. There is nothing else to show.</p>
-${editOption} <br>
-${LogOutOption} <br>
-<a href="index">Home</a>
-
+<h1>This is a blank page still :(</h1>
+<display:table name="rows">
+    <display:column property="name" title="His Name" />
+    <display:column property="username" />
+    <display:column property="password" />
+</display:table>
 
 
 <!-- Optional JavaScript -->
