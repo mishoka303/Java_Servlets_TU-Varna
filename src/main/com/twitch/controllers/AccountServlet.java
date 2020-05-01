@@ -42,7 +42,6 @@ public class AccountServlet extends HttpServlet{
                     } else {
                         req.setAttribute("user", students.getStudents().get(int_id));
                         req.setAttribute("id", int_id);
-                        System.out.println(req.getSession().getAttribute("logged_id"));
                         if ((int) req.getSession().getAttribute("logged_id") == int_id) {
                             req.setAttribute("editOption", "<a href=\"editProfile\">Edit Profile</a>   ");
                             req.setAttribute("LogOutOption", "   <a href=\"logout\">Log Out</a>");
@@ -53,7 +52,6 @@ public class AccountServlet extends HttpServlet{
                 }// Else check if session logged in
                 else if (req.getSession().getAttribute("logged_id") != null) {
                     int int_id = (int) req.getSession().getAttribute("logged_id");
-                    System.out.println(req.getSession().getAttribute("logged_id"));
                     DashboardSessionOrganizer(req, resp, int_id);
                     req.getRequestDispatcher("/dashboard.jsp").forward(req, resp);
                 }

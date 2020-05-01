@@ -11,6 +11,7 @@ public class User {
     String name;
     String username;
     String password;
+    String message;
 
     public User() { }
 
@@ -50,5 +51,8 @@ public class User {
         this.password = password;
     }
 
+    public String getMessage() { return message; }
+
+    public void setMessage(String msg) { this.message = msg; }
 
 }

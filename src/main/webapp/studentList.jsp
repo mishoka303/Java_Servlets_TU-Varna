@@ -1,4 +1,5 @@
 <%@ taglib prefix="display" uri="http://displaytag.sf.net" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -7,12 +8,21 @@
     <title>Students list</title>
 </head>
 <body>
-<h1>This is a blank page still :(</h1>
-<display:table name="rows">
-    <display:column property="name" title="His Name" />
-    <display:column property="username" />
-    <display:column property="password" />
-</display:table>
+<h1>This is a full list of students</h1>
+<table>
+    <tr>
+        <td><b>Name</b></td>
+        <td><b>Username</b></td>
+        <td><b>Additional notes</b></td>
+    </tr>
+    <c:forEach items="${rows}" var="user" varStatus="i">
+        <tr>
+            <td><a href="dashboard?id=${i.index}">${user.name}</a></td>
+            <td>${user.username}</td>
+            <td></td>
+        </tr>
+    </c:forEach>
+</table>
 
 
 <!-- Optional JavaScript -->
