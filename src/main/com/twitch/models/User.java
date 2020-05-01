@@ -1,12 +1,26 @@
 package twitch.models;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement(name = "student")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class User {
 
     String name;
     String username;
     String password;
 
-    /* CONSTRUCTOR */
+    public User() { }
+
+    /* CONSTRUCTOR Username, Password*/
+    public User(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+
+    /* CONSTRUCTOR Name, Username, Password*/
     public User(String name, String username, String password) {
         this.name = name;
         this.username = username;

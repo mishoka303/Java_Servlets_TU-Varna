@@ -1,5 +1,6 @@
 package twitch.controllers;
 
+import twitch.models.Students;
 import twitch.models.User;
 
 import javax.servlet.ServletException;
@@ -7,15 +8,22 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
+import java.io.*;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 public class AccountServlet extends HttpServlet{
-    List<User> users = new ArrayList<User>();
+    //static public ArrayList<User> users = new ArrayList<>(); //students in array
+    static public Students students = new Students(); //POJO class
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -36,10 +44,10 @@ public class AccountServlet extends HttpServlet{
                 String query1 = req.getParameter("id");
                 int int_id = Integer.parseInt(query1);
 
-                if (int_id > users.size() - 1 || users.get(int_id) == null) {
+                if (int_id > students.getStudents().size() - 1 || students.getStudents().get(int_id) == null) {
                     resp.sendRedirect("index");
                 } else {
-                    req.setAttribute("user", users.get(int_id));
+                    req.setAttribute("user", students.getStudents().get(int_id));
                     req.setAttribute("id", int_id);
                     if ((int) req.getSession().getAttribute("logged_id") == int_id) {
                         req.setAttribute("editOption", "<a href=\"${pageContext.request.contextPath}/editProfile\">Edit Profile</a>");
@@ -68,11 +76,6 @@ public class AccountServlet extends HttpServlet{
             req.getSession().invalidate();
             resp.sendRedirect("index");
         }
-        // Click on LogOut
-        else if (req.getRequestURI().substring(req.getRequestURI().lastIndexOf('/')).equals("/logout")) {
-            req.getSession().invalidate();
-            resp.sendRedirect("index");
-        }
         // Click on hideGreetz
         else if (req.getRequestURI().substring(req.getRequestURI().lastIndexOf('/')).equals("/hideGreetz")) {
             HideGreetsForToday(req, resp);
@@ -87,7 +90,6 @@ public class AccountServlet extends HttpServlet{
         String buttonRegister = req.getParameter("register");
         String buttonLogin = req.getParameter("login");
         String buttonEditProfile = req.getParameter("editProfile");
-        String buttonLogOut = req.getParameter("logout");
 
         //Upon clicking Register(on Register)
         if (buttonRegister != null) {
@@ -97,7 +99,7 @@ public class AccountServlet extends HttpServlet{
 
             if (cpassword.equals(password)) {
                 if (!checkDuplicates(username)) {
-                    users.add(new User("", username, password));
+                    students.add(new User(username, password));
 
                     req.setAttribute("ErrorMsg", "Successful registration!<br>");
                     req.getRequestDispatcher("/login.jsp").forward(req, resp);
@@ -133,15 +135,51 @@ public class AccountServlet extends HttpServlet{
         else if (buttonEditProfile != null) {
             int id = (int) req.getSession().getAttribute("logged_id");
             String name = req.getParameter("name");
-            users.get(id).setName(name);
+            students.getStudents().get(id).setName(name);
             resp.sendRedirect("dashboard");
         }
     }
 
+    // On servlet startup
+    public static void AccountServletOnStart(String xmlPath) {
+        try { students = readFromXML(xmlPath); } catch (JAXBException ex) { ex.printStackTrace(); } catch (FileNotFoundException ex) { ex.printStackTrace(); }
+    }
+
+    // On servlet stop
+    public static void AccountServletOnStop(String xmlPath) {
+        try { writeToXML(xmlPath, students); } catch (JAXBException ex) { ex.printStackTrace(); }
+    }
+
+    // JAXB Spring Marshal (Write contents to XML file)
+    public static void writeToXML(String xmlFile, Students students) throws JAXBException {
+
+        // Създаване на JAXB контекст
+        JAXBContext context = JAXBContext.newInstance(Students.class);
+        // Създаване на marshaller инстанция
+        Marshaller m = context.createMarshaller();
+        m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+        // Записване в System.out
+        m.marshal(students, System.out);
+        // Записване във файл
+        m.marshal(students, new File(xmlFile));
+    }
+
+    // JAXB Spring Unmarshal (Get contents from XML file)
+    public static Students readFromXML(String xmlFile) throws JAXBException, FileNotFoundException {
+
+        // Създаване на JAXB контекст
+        JAXBContext context = JAXBContext.newInstance(Students.class);
+        // Създаване на unmarshaller инстанция
+        Unmarshaller um = context.createUnmarshaller();
+        Students students = (Students) um.unmarshal(new FileReader(xmlFile));
+
+        return students;
+    }
+
     // Used in register.jsp
     protected boolean checkDuplicates(String tmpUsername) {
-        for (int i = 0; i < users.size(); i++) {
-            User usr = users.get(i);
+        for (int i = 0; i < students.getStudents().size(); i++) {
+            User usr = students.getStudents().get(i);
             if (usr.getUsername().equals(tmpUsername)) {
                 return true;
             }
@@ -151,8 +189,8 @@ public class AccountServlet extends HttpServlet{
 
     // Used in login.jsp
     protected int checkLogin(String tmpUsername, String tmpPassword) {
-        for (int i = users.size() - 1; i >= 0; i--) {
-            User usr = users.get(i);
+        for (int i = students.getStudents().size() - 1; i >= 0; i--) {
+            User usr = students.getStudents().get(i);
             if (usr.getUsername().equals(tmpUsername) && usr.getPassword().equals(tmpPassword)) {
                 return i;
             }
@@ -179,7 +217,7 @@ public class AccountServlet extends HttpServlet{
 
     // Used to check for cookie Greetz if it's true or false + additions(Edit Profile, Log Out)
     private void DashboardSessionOrganizer(HttpServletRequest req, HttpServletResponse resp, int int_id) {
-        req.setAttribute("user", users.get(int_id));
+        req.setAttribute("user", students.getStudents().get(int_id));
         req.setAttribute("id", int_id);
         req.setAttribute("editOption", "<a href=\"editProfile\">Edit Profile</a>");
         req.setAttribute("LogOutOption", "<a href=\"logout\">Log Out</a>");

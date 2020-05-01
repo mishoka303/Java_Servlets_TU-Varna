@@ -52,4 +52,10 @@
   </servlet-mapping>
   <!-- END -->
 
+  <listener>
+    <listener-class>
+      twitch.controllers.MyServletContextListener
+    </listener-class>
+  </listener>
+
 </web-app>

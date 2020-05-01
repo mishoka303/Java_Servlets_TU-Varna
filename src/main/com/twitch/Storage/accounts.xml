@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns2:students xmlns:ns2="de.vogella.xml.jaxb.model">
+    <studentList>
+        <student>
+            <name>Iliyan Koychev</name>
+            <username>u1</username>
+            <password>u1</password>
+        </student>
+        <student>
+            <name>Iliyan Boychev</name>
+            <username>u2</username>
+            <password>u2</password>
+        </student>
+        <student>
+            <name>Kaloyan Kalchev</name>
+            <username>u3</username>
+            <password>u3</password>
+        </student>
+        <student>
+            <name>Peter Peev</name>
+            <username>u4</username>
+            <password>u4</password>
+        </student>
+    </studentList>
+</ns2:students>
