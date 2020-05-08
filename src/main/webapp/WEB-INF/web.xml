@@ -56,6 +56,17 @@
     <url-pattern>/hideGreetz</url-pattern>
   </servlet-mapping>
 
+  <!-- Account Edit Page Servlet & Mapping -->
+  <servlet>
+    <servlet-name>EditAccount</servlet-name>
+    <servlet-class>twitch.controllers.EditAccountServlet</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>EditAccount</servlet-name>
+    <url-pattern>/editProfileNew</url-pattern>
+  </servlet-mapping>
+
   <!-- FILTERS -->
   <filter>
     <filter-name>AuthFilter</filter-name> <!-- mandatory -->
@@ -66,13 +77,20 @@
     <servlet-name>Account</servlet-name>
     <dispatcher>REQUEST</dispatcher>
   </filter-mapping>
+  <filter-mapping>
+    <filter-name>AuthFilter</filter-name> <!-- mandatory -->
+    <servlet-name>EditAccount</servlet-name>
+    <dispatcher>REQUEST</dispatcher>
+  </filter-mapping>
 
+  <!-- LISTENER -->
   <listener>
     <listener-class>
       twitch.controllers.MyServletContextListener
     </listener-class>
   </listener>
 
+  <!-- ERROR PAGE MAPPING -->
   <error-page>
     <error-code>403</error-code>
     <location>/error-page/403.html</location>

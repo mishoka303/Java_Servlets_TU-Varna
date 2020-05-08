@@ -13,7 +13,7 @@
 </head>
 <body>
 <h1>Edit profile page</h1>
-<form action="login" method="POST">
+<form method="POST">
     <label>Name: </label>
     <input required minlength="1" type="text" name="name" value=""><br>
     ${ErrorMsg}

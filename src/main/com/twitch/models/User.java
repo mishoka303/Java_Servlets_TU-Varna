@@ -11,7 +11,7 @@ public class User {
     String name;
     String username;
     String password;
-    String message;
+    String bio;
 
     public User() { }
 
@@ -33,26 +33,27 @@ public class User {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getUsername() {
         return username;
+    }
+
+    public String getPassword() { return password; }
+
+    public String getBio() { return bio; }
+
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public void setUsername(String username) {
         this.username = username;
     }
 
-    public String getPassword() { return password; }
-
     public void setPassword(String password) {
         this.password = password;
     }
 
-    public String getMessage() { return message; }
-
-    public void setMessage(String msg) { this.message = msg; }
+    public void setBio(String bio) { this.bio = bio; }
 
 }

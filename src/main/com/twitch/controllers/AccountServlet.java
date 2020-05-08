@@ -23,7 +23,7 @@ import java.util.Date;
 import java.util.List;
 
 public class AccountServlet extends HttpServlet{
-    static public ArrayList<User> users = new ArrayList<>(); //students in array
+    //static public ArrayList<User> users = new ArrayList<>(); //students in array
     static public Students students = new Students(); //POJO class
 
     @Override
@@ -207,7 +207,7 @@ public class AccountServlet extends HttpServlet{
     protected void DashboardSessionOrganizer(HttpServletRequest req, HttpServletResponse resp, int int_id) {
         req.setAttribute("user", students.getStudents().get(int_id));
         req.setAttribute("id", int_id);
-        req.setAttribute("editOption", "<a href=\"editProfile\">Edit Profile</a>");
+        req.setAttribute("editOption", "<a href=\"editProfile\">Edit Profile</a><br><a href=\"editProfileNew\">Edit Profile(New)</a>");
         req.setAttribute("LogOutOption", "<a href=\"logout\">Log Out</a>");
 
         Cookie ck[]= req.getCookies();

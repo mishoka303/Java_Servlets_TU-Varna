@@ -2,7 +2,7 @@
 <ns2:students xmlns:ns2="de.vogella.xml.jaxb.model">
     <studentList>
         <student>
-            <name>Iliyan Koychev</name>
+            <name>Iliyan Boychev</name>
             <username>u1</username>
             <password>u1</password>
         </student>
