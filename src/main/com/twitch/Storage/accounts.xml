@@ -2,9 +2,10 @@
 <ns2:students xmlns:ns2="de.vogella.xml.jaxb.model">
     <studentList>
         <student>
-            <name>Iliyan Boychev</name>
+            <name>Iliyan Koychev</name>
             <username>u1</username>
             <password>u1</password>
+            <bio>I have worked very hard on Java Servlets, but I need to do Android as well or else Asssistant Dobrev will kill me and smash my head in the wall, as his patience is reaching zero.</bio>
         </student>
         <student>
             <name>Iliyan Boychev</name>

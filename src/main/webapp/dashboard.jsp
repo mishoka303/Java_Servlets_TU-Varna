@@ -9,8 +9,8 @@
 ${CookieGreetz}
 ${CookieTime}
 <br>
-<h1>Showing details for: ${user.getName()}</h1><br>
-<p>The username associated is ${user.getUsername()}. There is nothing else to show.</p>
+<h1>Showing details for: ${user.getName()},</h1><h3>also known as ${user.getUsername()}</h3><br>
+<p>${user.getBio()}</p><br>
 ${editOption} <br>
 ${LogOutOption} <br>
 <a href="index">Home</a>

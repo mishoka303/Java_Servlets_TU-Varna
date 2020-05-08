@@ -1,11 +1,9 @@
 package twitch.Filters;
 
 import javax.servlet.*;
-import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Date;
 
 import static twitch.controllers.AccountServlet.*;
 
@@ -28,14 +26,12 @@ public class AuthFilter implements Filter {
             if (URI.equals("/login")) { req.getRequestDispatcher("/login.jsp").forward(req, resp); }
             else if (URI.equals("/register")) { req.getRequestDispatcher("/register.jsp").forward(req, resp); }
             else if (URI.equals("/editProfile")) { resp.sendRedirect("login"); }
-            else if (URI.equals("/editProfileNew")) { resp.sendRedirect("login"); }
             else if (URI.equals("/studentList")) { resp.sendRedirect("login"); }
             else chain.doFilter(req, resp);
         }
         //If session is TRUE and LOGGED IN
         else if (req.getSession(false) != null && req.getSession(false).getAttribute("logged_id") != null && type.equals("GET")) {
-            if (URI.equals("/editProfile")) { req.getRequestDispatcher("/editProfile.jsp").forward(req, resp); }
-            else if (URI.equals("/editProfileNew")) { req.getRequestDispatcher("/editProfileNew.jsp").forward(req, resp); }
+            if (URI.equals("/editProfile")) { req.setAttribute("user", students.getStudents().get((int) req.getSession().getAttribute("logged_id"))); req.getRequestDispatcher("/editProfile.jsp").forward(req, resp); }
             else if (URI.equals("/studentList")) { req.setAttribute("rows", students.getStudents()); req.getRequestDispatcher("/studentList.jsp").forward(req, resp); }
             else if (URI.equals("/login")) { resp.sendRedirect("dashboard"); }
             else if (URI.equals("/register")) { resp.sendRedirect("dashboard"); }

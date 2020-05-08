@@ -1,7 +1,8 @@
 function postUserName() {
+    //debugger
     const formData = toJSONString(document.querySelector('form.user-Username'));
 
-    fetch('editProfileNew', {
+    fetch('editProfileUsername', {
         method: "POST",
         headers: {
             'Content-Type': 'application/json'
@@ -13,9 +14,32 @@ function postUserName() {
     })
     .then((data) => {
         console.log(data);
-        var element = document.getElementById('username_message');
+        var element = document.getElementById('Username_message');
         element.innerText = data.message;
     });
+
+    return false;
+}
+
+function postNameBio() {
+    //debugger
+    const formData = toJSONString(document.querySelector('form.user-NameBio'));
+
+    fetch('editProfileNameBio', {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: formData
+    })
+        .then((response) => {
+            return response.json();
+        })
+        .then((data) => {
+            console.log(data);
+            var element = document.getElementById('NameBio_message');
+            element.innerText = data.message;
+        });
 
     return false;
 }

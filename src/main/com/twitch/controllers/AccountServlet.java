@@ -4,7 +4,6 @@ import twitch.models.Students;
 import twitch.models.User;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -17,10 +16,8 @@ import java.io.*;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
 public class AccountServlet extends HttpServlet{
     //static public ArrayList<User> users = new ArrayList<>(); //students in array
@@ -118,14 +115,6 @@ public class AccountServlet extends HttpServlet{
                 req.getRequestDispatcher("/login.jsp").forward(req, resp);
             }
         }
-
-        //Upon clicking editProfile
-        else if (buttonEditProfile != null) {
-            int id = (int) req.getSession().getAttribute("logged_id");
-            String name = req.getParameter("name");
-            students.getStudents().get(id).setName(name);
-            resp.sendRedirect("dashboard");
-        }
     }
 
     // On servlet startup
@@ -165,7 +154,7 @@ public class AccountServlet extends HttpServlet{
     }
 
     // Used in register.jsp
-    protected boolean checkDuplicates(String tmpUsername) {
+    public static boolean checkDuplicates(String tmpUsername) {
         for (int i = 0; i < students.getStudents().size(); i++) {
             User usr = students.getStudents().get(i);
             if (usr.getUsername().equals(tmpUsername)) {
@@ -207,7 +196,7 @@ public class AccountServlet extends HttpServlet{
     protected void DashboardSessionOrganizer(HttpServletRequest req, HttpServletResponse resp, int int_id) {
         req.setAttribute("user", students.getStudents().get(int_id));
         req.setAttribute("id", int_id);
-        req.setAttribute("editOption", "<a href=\"editProfile\">Edit Profile</a><br><a href=\"editProfileNew\">Edit Profile(New)</a>");
+        req.setAttribute("editOption", "<a href=\"editProfile\">Edit Profile</a>");
         req.setAttribute("LogOutOption", "<a href=\"logout\">Log Out</a>");
 
         Cookie ck[]= req.getCookies();

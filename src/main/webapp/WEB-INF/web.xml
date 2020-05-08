@@ -41,10 +41,6 @@
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>Account</servlet-name>
-    <url-pattern>/editProfile</url-pattern>
-  </servlet-mapping>
-  <servlet-mapping>
-    <servlet-name>Account</servlet-name>
     <url-pattern>/studentList</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
@@ -64,7 +60,15 @@
 
   <servlet-mapping>
     <servlet-name>EditAccount</servlet-name>
-    <url-pattern>/editProfileNew</url-pattern>
+    <url-pattern>/editProfile</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>EditAccount</servlet-name>
+    <url-pattern>/editProfileUsername</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>EditAccount</servlet-name>
+    <url-pattern>/editProfileNameBio</url-pattern>
   </servlet-mapping>
 
   <!-- FILTERS -->
