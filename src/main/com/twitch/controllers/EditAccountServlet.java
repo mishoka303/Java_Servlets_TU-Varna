@@ -20,38 +20,30 @@ public class EditAccountServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         //Moved to AuthFilter
-        req.getRequestDispatcher("/editProfileNew.jsp").forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
-        String buttonEditName = req.getParameter("editName");
+        int int_id = (int) req.getSession().getAttribute("logged_id");
 
-        //if (buttonEditName != null) {
-            //int int_id = (int) req.getSession().getAttribute("logged_id");
+        StringBuilder sb = new StringBuilder();
+        String s;
+        while ((s = req.getReader().readLine()) != null) {
+            sb.append(s);
+        }
 
-            StringBuilder sb = new StringBuilder();
-            String s;
-            while ((s = req.getReader().readLine()) != null) {
-                sb.append(s);
-            }
+        User newUser = (User) gson.fromJson(sb.toString(), User.class);
+        System.out.println(newUser.getUsername());
+        System.out.println(newUser.getPassword());
+        System.out.println(newUser.getName());
+        System.out.println(int_id);
 
-            //User newUser = (User) gson.fromJson(sb.toString(), User.class);
+        JsonResult result = new JsonResult("Successfully updated the username!");
 
-            JsonResult result = new JsonResult("Success");
-
-            resp.setContentType("application/json;charset=UTF-8");
-            PrintWriter out = resp.getWriter();
-            out.println(gson.toJson(result)); //Return result back to page
-            out.flush();
-
-            //req.setAttribute("ErrorMsg", "Your ID is: " + String.valueOf(int_id));
-
-            //req.getRequestDispatcher("/editProfileNew.jsp").forward(req, resp);
-        /*}
-        else {
-            resp.sendRedirect("editProfileNew");
-        }*/
+        resp.setContentType("application/json;charset=UTF-8");
+        PrintWriter out = resp.getWriter();
+        out.println(gson.toJson(result)); //Return result back to page
+        out.flush();
     }
 }

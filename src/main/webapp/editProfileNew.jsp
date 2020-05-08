@@ -13,10 +13,10 @@
 </head>
 <body>
 <h1>Edit profile page</h1>
-<form class="user-name" enctype="application/x-www-form-urlencoded" method="POST">
-    <span id="user_info_message"></span>
-    <label>Name:
-        <input required minlength="1" type="text" name="name" value=""/>
+<form class="user-Username" enctype="application/x-www-form-urlencoded" method="POST">
+    <span id="username_message"></span><br>
+    <label>Username:
+        <input required minlength="1" type="text" name="username" value=""/>
     </label><br>
     ${ErrorMsg}
     <!--<input type="submit" name="editName" value="Save changes">-->

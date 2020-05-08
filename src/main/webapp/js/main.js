@@ -1,5 +1,5 @@
 function postUserName() {
-    const formData = toJSONString(document.querySelector('form.user-name'));
+    const formData = toJSONString(document.querySelector('form.user-Username'));
 
     fetch('editProfileNew', {
         method: "POST",
@@ -13,7 +13,7 @@ function postUserName() {
     })
     .then((data) => {
         console.log(data);
-        var element = document.getElementById('user_info_message');
+        var element = document.getElementById('username_message');
         element.innerText = data.message;
     });
 
